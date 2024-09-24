@@ -37,7 +37,11 @@ const SearchScreen = ({navigation}) => {
       });
   };
 
-  const cancelSearch = () => {};
+  const cancelSearch = () => {
+    setSearchMovies([]);
+    setSearchedOnce(false);
+  };
+
   return (
     <View>
       <SafeAreaView edges={SAFE_AREA_VIEW_EDGES} style={styles.container}>
@@ -77,7 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     marginHorizontal: 16,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   textContainer: {
     flex: 1,
