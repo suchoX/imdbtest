@@ -6,14 +6,20 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import {StatusBar, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {Provider} from 'react-redux';
+import {store} from './redux/store';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import NavigationUtils from './utils/NavigationUtils';
+import TabSearchIcon from './assets/tabSearch';
+import HomeScreen from './ui/screens/HomeScreen';
+import SearchScreen from './ui/screens/SearchScreen';
+import SettingsScreen from './ui/screens/SettingsScreen';
+import TabSettingsIcon from './assets/tabSettings';
+import TabTrendIcon from './assets/tabTrend';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -22,16 +28,58 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const Tab = createBottomTabNavigator();
+  const getNavigationComponent = () => {
+    return (
+      <Tab.Navigator
+        initialRouteName={NavigationUtils.SCREEN_TRENDING}
+        screenOptions={{
+          headerShown: false,
+          tabBarHideOnKeyboard: true,
+          tabBarShowLabel: false,
+        }}>
+        <Tab.Screen
+          name={NavigationUtils.SCREEN_TRENDING}
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({focused, size}) => (
+              <TabTrendIcon enabled={focused} width={size} height={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={NavigationUtils.SCREEN_SEARCH}
+          component={SearchScreen}
+          options={{
+            tabBarIcon: ({focused, size}) => (
+              <TabSearchIcon enabled={focused} width={size} height={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={NavigationUtils.SCREEN_SETTINGS}
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: ({focused, size}) => (
+              <TabSettingsIcon enabled={focused} width={size} height={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  };
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-    </SafeAreaView>
+    <Provider store={store}>
+      <NavigationContainer>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        {getNavigationComponent()}
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({});
 
 export default App;
