@@ -11,31 +11,42 @@ interface MovieItemData {
 export const MovieItemComponent: React.FC<MovieItemData> = ({movieData}) => {
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.background}
-        source={{
-          uri: AppUtils.getImageUrl(movieData.backdrop_path),
-        }}
-      />
-      <View style={styles.backgroundCover} />
-      <View style={styles.innerContainer}>
+      {movieData.poster_path && (
         <Image
-          style={styles.poster}
+          style={styles.background}
           source={{
-            uri: AppUtils.getImageUrl(movieData.poster_path),
+            uri: AppUtils.getImageUrl(movieData.backdrop_path),
           }}
         />
+      )}
+      <View style={styles.backgroundCover} />
+      <View style={styles.innerContainer}>
+        {movieData.poster_path && (
+          <Image
+            style={styles.poster}
+            source={{
+              uri: AppUtils.getImageUrl(movieData.poster_path),
+            }}
+          />
+        )}
         <View style={styles.textsContainer}>
-          <Text style={styles.heading} numberOfLines={2}>
-            {movieData.title}
-          </Text>
-          <Text style={styles.details} numberOfLines={7}>
-            {movieData.overview}
-          </Text>
+          {movieData.title && (
+            <Text style={styles.heading} numberOfLines={2}>
+              {movieData.title}
+            </Text>
+          )}
+          {movieData.overview && (
+            <Text style={styles.details} numberOfLines={7}>
+              {movieData.overview}
+            </Text>
+          )}
+
           <View style={{flex: 1}} />
-          <Text style={styles.releaseDate}>
-            {AppUtils.getDisplayDate(movieData.release_date)}
-          </Text>
+          {movieData.release_date && (
+            <Text style={styles.releaseDate}>
+              {AppUtils.getDisplayDate(movieData.release_date)}
+            </Text>
+          )}
         </View>
       </View>
     </View>
