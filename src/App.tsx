@@ -8,7 +8,6 @@
 import React from 'react';
 import {StatusBar, useColorScheme} from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Provider} from 'react-redux';
 import {store} from './redux/store';
 import {NavigationContainer} from '@react-navigation/native';
@@ -20,14 +19,9 @@ import SearchScreen from './ui/screens/SearchScreen';
 import SettingsScreen from './ui/screens/SettingsScreen';
 import TabSettingsIcon from './assets/tabSettings';
 import TabTrendIcon from './assets/tabTrend';
+import Colors from './utils/Colors';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   const Tab = createBottomTabNavigator();
   const getNavigationComponent = () => {
     return (
@@ -37,6 +31,10 @@ function App(): React.JSX.Element {
           headerShown: false,
           tabBarHideOnKeyboard: true,
           tabBarShowLabel: false,
+          tabBarStyle: {
+            backgroundColor: Colors.BLUE,
+            borderTopWidth: 0,
+          },
         }}>
         <Tab.Screen
           name={NavigationUtils.SCREEN_TRENDING}
@@ -73,8 +71,9 @@ function App(): React.JSX.Element {
     <Provider store={store}>
       <NavigationContainer>
         <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
+          barStyle="light-content"
+          backgroundColor={Colors.DARK_BLUE}
+          translucent
         />
         {getNavigationComponent()}
       </NavigationContainer>
