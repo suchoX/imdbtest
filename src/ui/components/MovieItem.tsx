@@ -3,6 +3,7 @@ import {MovieData} from '../../api/ResponseData';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import AppUtils from '../../utils/AppUtils';
 import Colors from '../../utils/Colors';
+import {NO_POSTER_FOUND} from '../../utils/Strings';
 
 interface MovieItemData {
   movieData: MovieData;
@@ -21,13 +22,17 @@ export const MovieItemComponent: React.FC<MovieItemData> = ({movieData}) => {
       )}
       <View style={styles.backgroundCover} />
       <View style={styles.innerContainer}>
-        {movieData.poster_path && (
+        {movieData.poster_path ? (
           <Image
             style={styles.poster}
             source={{
               uri: AppUtils.getImageUrl(movieData.poster_path),
             }}
           />
+        ) : (
+          <View style={styles.noPosterContainer}>
+            <Text style={styles.noPosterText}>{NO_POSTER_FOUND}</Text>
+          </View>
         )}
         <View style={styles.textsContainer}>
           {movieData.title && (
@@ -88,6 +93,16 @@ const styles = StyleSheet.create({
   poster: {
     width: 130,
     height: '100%',
+  },
+  noPosterContainer: {
+    width: 130,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noPosterText: {
+    color: Colors.WHITE,
+    fontSize: 16,
   },
   background: {
     position: 'absolute',

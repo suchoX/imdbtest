@@ -26,6 +26,7 @@ const HomeScreen = ({navigation}) => {
       })
       .catch(error => {
         console.error(error);
+        To;
       })
       .finally(() => {
         setIsLoading(false);
