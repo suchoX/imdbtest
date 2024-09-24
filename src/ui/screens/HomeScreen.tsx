@@ -12,6 +12,7 @@ import {MovieData} from '../../api/ResponseData';
 import Colors from '../../utils/Colors';
 import {MovieItemComponent} from '../components/MovieItem';
 import {TRENDING} from '../../utils/Strings';
+import AppUtils from '../../utils/AppUtils';
 
 const SAFE_AREA_VIEW_EDGES: Edges = ['top'];
 const HomeScreen = ({navigation}) => {
@@ -26,7 +27,7 @@ const HomeScreen = ({navigation}) => {
       })
       .catch(error => {
         console.error(error);
-        To;
+        AppUtils.showAPIErrorToast();
       })
       .finally(() => {
         setIsLoading(false);

@@ -13,6 +13,7 @@ import SearchInput from '../components/SearchInput';
 import {MovieData} from '../../api/ResponseData';
 import {MovieItemComponent} from '../components/MovieItem';
 import {fetchSearchResults} from '../../api/Fetch';
+import AppUtils from '../../utils/AppUtils';
 
 const SAFE_AREA_VIEW_EDGES: Edges = ['top'];
 const SearchScreen = ({navigation}) => {
@@ -29,6 +30,7 @@ const SearchScreen = ({navigation}) => {
       })
       .catch(error => {
         console.error(error);
+        AppUtils.showAPIErrorToast();
       })
       .finally(() => {
         setIsLoading(false);

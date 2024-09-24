@@ -20,6 +20,7 @@ import SettingsScreen from './ui/screens/SettingsScreen';
 import TabSettingsIcon from './assets/tabSettings';
 import TabTrendIcon from './assets/tabTrend';
 import Colors from './utils/Colors';
+import Toast from 'react-native-toast-message';
 
 function App(): React.JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -76,6 +77,7 @@ function App(): React.JSX.Element {
           translucent
         />
         {getNavigationComponent()}
+        <Toast />
       </NavigationContainer>
     </Provider>
   );
